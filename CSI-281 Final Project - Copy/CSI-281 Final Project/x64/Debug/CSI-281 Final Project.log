@@ -1,3 +1,0 @@
-﻿  Sudoku.cpp
-C:\Users\skirm\Desktop\Programming Projects\Data Structures and Algorithms\CSI-281 Final Project\CSI-281 Final Project\Sudoku.cpp(18,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  CSI-281 Final Project.vcxproj -> C:\Users\skirm\Desktop\Programming Projects\Data Structures and Algorithms\CSI-281 Final Project\x64\Debug\CSI-281 Final Project.exe
