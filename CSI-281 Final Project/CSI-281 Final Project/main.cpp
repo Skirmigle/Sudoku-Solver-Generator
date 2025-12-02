@@ -45,10 +45,10 @@ int main()
 	if (tempString == "y")
 	{
 		sudoku.solve(sudoku.sudokuBoard, 0, 0);
-		sudoku.print();
+		sudoku.print(sudoku.sudokuBoard);
 	}
 	else if (tempString == "n")
 	{
-		cout << "this feture has not been implemented, goodbye." << endl;
+		sudoku.play();
 	}
 }

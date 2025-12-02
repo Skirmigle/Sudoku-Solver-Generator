@@ -138,7 +138,7 @@ void Sudoku::generate()
 	{
 		while (tempBool == false)
 		{
-			cout << "enter the name you would to export the file as: ";
+			cout << "enter the name of the file you wish to import: ";
 			cin >> tempString;
 			tempBool = import(tempString);
 			if (tempString == "exit") 
@@ -154,14 +154,14 @@ void Sudoku::generate()
 	if (tempString == "n")
 	{
 		fillEmpty();
-		print();
+		print(sudokuBoard);
 		for (int i = 0; i < 9; i = i + 3)
 		{
 			fillBlock(i, i);
-			print();
+			print(sudokuBoard);
 		}
 		fillAll(0, 0);
-		print();
+		print(sudokuBoard);
 		while (diff > 3 || diff < 1)
 		{
 			cout << "Please enter the level of difficulty" << endl
@@ -175,7 +175,7 @@ void Sudoku::generate()
 		remove(sudokuBoard, diff);
 		imported = false;
 	}
-	print();
+	print(sudokuBoard);
 }
 
 bool Sudoku::hasUniqueSolution(int board[9][9]) {
@@ -199,7 +199,89 @@ bool Sudoku::import(string fileName)
 	return true;
 }
 
-void Sudoku::print()
+void Sudoku::play()
+{
+	int tempInt, tempInt2, tempInt3, i, j, board[9][9];
+
+	bool tempBool, tempBool2, solved = false;
+
+	for(i = 0; i < 9; i++)
+		for (j = 0; j < 9; j++) 
+		{
+			board[i][j] = sudokuBoard[i][j];
+		}
+
+	while (solved == false)
+	{
+		print(board);
+		cout << "Please choose from the following:" << endl
+			<< "1. place" << endl
+			<< "2. remove" << endl
+			<< "3. check" << endl;
+		cin >> tempInt;
+		switch (tempInt)
+		{
+		//add
+		case 1:
+			do
+			{
+				cout << "Please enter the row: ";
+				cin >> tempInt;
+				cout << "Please enter the column: ";
+				cin >> tempInt2;
+				cout << "Please enter the number you wish to enter: ";
+				cin >> tempInt3;
+				if (!(tempInt < 10 && tempInt > 0 && tempInt2 < 10 && tempInt2 > 0 && tempInt3 < 10 && tempInt3 > 0)) cout << "your entry was invalid, try again." << endl;
+			} while (!(tempInt < 10 && tempInt > 0 && tempInt2 < 10 && tempInt2 > 0 && tempInt3 < 10 && tempInt3 > 0));
+			if (board[tempInt - 1][tempInt2 - 1] == 0) board[tempInt - 1][tempInt2 - 1] = tempInt3;
+			else cout << "that number space is already filled." << endl;
+			break;
+		//remove
+		case 2:
+			do
+			{
+				cout << "Please enter the row: ";
+				cin >> tempInt;
+				cout << "Please enter the column: ";
+				cin >> tempInt2;
+				if (!(tempInt < 10 && tempInt > 0 && tempInt2 < 10 && tempInt2 > 0)) cout << "your entry was invalid, try again." << endl;
+			} while (!(tempInt < 10 && tempInt > 0 && tempInt2 < 10 && tempInt2 > 0));
+			if (sudokuBoard[tempInt - 1][tempInt2 - 1] != 0) cout << "This number cannot be removed." << endl;
+			else if (board[tempInt - 1][tempInt2 - 1] == 0) cout << "that space is already empty." << endl;
+			else board[tempInt - 1][tempInt2 - 1] = 0;
+			break;
+		//check
+		case 3:
+			tempBool2 = true;
+			for (i = 0; i < 9; i++)
+				for (j = 0; j < 9; j++)
+					{
+					if (board[i][j] == 0) tempBool2 = false;
+					else
+					{
+						tempInt = board[i][j];
+						board[i][j] = 0;
+						tempBool = check(board, i, j, tempInt);
+						board[i][j] = tempInt;
+						if (tempBool == false)
+						{
+							cout << board[i][j] << " at " << i << ", " << j << " is overlapping." << endl;
+							tempBool2 = false;
+						}
+					}
+					}
+			if (tempBool2 == true) solved = true;
+			break;
+		default: cout << "please enter one of the given options." << endl;
+			break;
+
+		}
+	}
+	cout << "Congratulations, You have completed the Sudoku." << endl;
+	return;
+}
+
+void Sudoku::print(int board[9][9])
 {
 	cout << "-------------------------" << endl;
 	for (int i = 0; i < 9; i++)
@@ -207,7 +289,7 @@ void Sudoku::print()
 		cout << "| ";
 		for (int j = 0; j < 9; j++) 
 		{
-			cout << sudokuBoard[i][j] << " ";
+			cout << board[i][j] << " ";
 			if (j % 3 == 2) cout << "| ";
 		}
 		cout << endl;

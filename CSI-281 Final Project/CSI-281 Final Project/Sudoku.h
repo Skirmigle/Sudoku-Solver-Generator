@@ -38,7 +38,8 @@ public:
 	void generate();
 	bool hasUniqueSolution(int board[9][9]);
 	bool import(string fileName);
-	void print();
+	void play();
+	void print(int board[9][9]);
 	void remove(int board[9][9], int amount);
 	bool solve(int board[9][9], int row, int column);
 	void solveCount(int board[9][9], int& count, int row, int column);
